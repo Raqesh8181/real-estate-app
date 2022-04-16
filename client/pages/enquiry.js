@@ -7,7 +7,8 @@ import {
   Text,
   Button,
   Input,
-  Center,
+  Textarea,
+  Heading,
   Select,
   NumberInput,
   NumberInputField,
@@ -23,92 +24,94 @@ import {
 } from "@chakra-ui/react";
 
 const Enquiry = () => {
-  const [input, setInput] = useState("");
+  const [data, setData] = useState({
+    fullname: "",
+    email: "",
+    phone: "",
+    enquiry: "",
+  });
 
-  const handleInputChange = (e) => setInput(e.target.value);
+  const { fullname, email, phone, enquiry } = data;
 
-  const isError = input === "";
+  const handleInputChange = (e) => {
+    setData({ ...data, [e.target.name]: [e.target.value] });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(data);
+    alert(
+      "Thank you being a part of Realor, Our team will contact within 24 hrs!!"
+    );
+  };
+
+  // let handleInputChange = (e) => {
+  //   let inputValue = e.target.value;
+  //   setValue(inputValue);
+  //   setInput(e.target.value);
+  // };
+
+  // const isError = input === "";
 
   return (
     <Box textAlign="center" justifyContent="flex-center" display="block ruby">
       <Flex flexWrap="wrap" justifyContent="flex-center" alignItems="center">
         <Box w="420px" p="5">
-          <FormControl isInvalid={!isError} mt={4}>
+          <Heading as="h3" m={3} p={3} size="lg">
+            Submit Your Enquiry
+          </Heading>
+          <FormControl mt={4}>
             <FormLabel htmlFor="first-name">Full name</FormLabel>
             <Input
               id="full-name"
-              //   value={input}
-              //   onChange={handleInputChange}
+              name="fullname"
+              value={fullname}
+              onChange={handleInputChange}
             />
-            {!isError ? (
-              <FormHelperText>
-                Enter the email you'd like to receive the newsletter on.
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Email is required.</FormErrorMessage>
-            )}
           </FormControl>
 
-          <FormControl isInvalid={!isError} mt={4}>
+          <FormControl mt={4}>
             <FormLabel htmlFor="email">Email</FormLabel>
             <Input
               id="email"
               type="email"
-              value={input}
+              name="email"
+              value={email}
               onChange={handleInputChange}
             />
-            {!isError ? (
-              <FormHelperText>
-                Enter the email you'd like to receive the newsletter on.
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Email is required.</FormErrorMessage>
-            )}
           </FormControl>
 
-          <FormControl isInvalid={!isError} mt={4}>
-            <FormLabel htmlFor="email">Phone</FormLabel>
+          <FormControl mt={4}>
+            <FormLabel htmlFor="phone">Phone</FormLabel>
             <Input
               id="phone"
+              name="phone"
               //   type="email"
-              //   value={input}
-              //   onChange={handleInputChange}
+              value={phone}
+              onChange={handleInputChange}
             />
-            {!isError ? (
-              <FormHelperText>
-                Enter the email you'd like to receive the newsletter on.
-              </FormHelperText>
-            ) : (
-              <FormErrorMessage>Email is required.</FormErrorMessage>
-            )}
           </FormControl>
 
           <FormControl mt={4}>
-            <FormLabel htmlFor="country">City</FormLabel>
-            <Select id="country" placeholder="Select country">
-              <option>Delhi</option>
-              <option>Mumbai</option>
-              <option>Hyderabad</option>
-              <option>Chennai</option>
-            </Select>
-          </FormControl>
-
-          <FormControl mt={4}>
-            <FormLabel htmlFor="amount">Amount</FormLabel>
-            <NumberInput max={50} min={10}>
-              <NumberInputField id="amount" />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
+            <FormLabel htmlFor="enquiry">Enquiry Details</FormLabel>
+            <Textarea
+              id="enquiry"
+              name="enquiry"
+              value={enquiry}
+              onChange={handleInputChange}
+              placeholder="Here is a sample placeholder"
+              size="sm"
+            />
           </FormControl>
 
           <Button
             // isLoading
             mt={4}
+            marginBottom="70px"
             loadingText="Submitting"
             colorScheme="teal"
+            name="submit"
+            onClick={onSubmit}
             // variant="outline"
           >
             Submit
